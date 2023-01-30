@@ -12,6 +12,19 @@ function nextSequence() {
     return buttonColors[randomNumber];
 }
 
+$("#comeca").click(function (e) { 
+    e.preventDefault();
+    if (isStarted == false || $("#level-title").text() == "Você Perdeu! Pressione qualquer tecla para reiniciar.") {
+        $("#level-title").text("Level: " + phase.toString());
+        $(".comeca").text("");
+        isStarted = true;
+        randomChosenColour = nextSequence();
+        var button = $("#" + randomChosenColour);
+        button.fadeOut(100).fadeIn(100);
+        playAudio(randomChosenColour);
+    }
+});
+
 // Evento para começar o jogo
 $(document).keydown(function (e) {
     if ((e.key == "a" && isStarted == false) || $("#level-title").text() == "Você Perdeu! Pressione qualquer tecla para reiniciar.") {
@@ -72,6 +85,7 @@ function nextLevel() {
 function gameOver() {
     playAudio("wrong");
     $("#level-title").text("Você Perdeu! Pressione qualquer tecla para reiniciar.");
+    $(".comeca").text("ou clique aqui");
     isStarted = false;
     gamePattern = [];
     phase = 0;
